@@ -39,7 +39,7 @@ spec:
           name: develop
         spec:
           forProvider:
-            repository: crossplane-example
+            repository: default
           providerConfigRef:
             name: default
       patches:
