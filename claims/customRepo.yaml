@@ -1,0 +1,7 @@
+apiVersion: github.kasnockndave.dev/v1alpha1
+kind: CustomRepo
+metadata:
+  name: crossplane-demo-repository
+spec:
+  parameters:
+    repoName: crossplane-demo-repository

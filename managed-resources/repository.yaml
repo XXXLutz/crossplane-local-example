@@ -1,0 +1,12 @@
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  labels:
+    repo: hello-world-crossplane-demo
+  name: hello-world-crossplane-demo
+spec:
+  forProvider:
+    gitignoreTemplate: Go
+    visibility: public
+  providerConfigRef:
+    name: default
