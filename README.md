@@ -14,10 +14,15 @@ Installed are:
 
 ### Prerequisites
 
-Install kind, options for different OSs are [described here](https://kind.sigs.k8s.io/docs/user/quick-start/#installation).
+Install `kind`, options for different OSs are [described here](https://kind.sigs.k8s.io/docs/user/quick-start/#installation).
 For Linux, best use brew.
 
 `brew install kind`
+
+Install `helm` in the same fashion. Options for different OSs are [described here](https://helm.sh/docs/intro/install/).
+For Linux, best use brew.
+
+`brew install helm`
 
 If not done yet, create a Github account.
 [Now follow the linked tutorial](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and create an access token 
