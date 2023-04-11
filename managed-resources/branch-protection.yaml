@@ -1,0 +1,20 @@
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: BranchProtection
+metadata:
+  name: main-protection
+spec:
+  forProvider:
+    allowsDeletions: true
+    enforceAdmins: true
+    pattern: main
+    repositoryIdSelector:
+      matchLabels:
+        repo: hello-world-crossplane-demo
+    requiredPullRequestReviews:
+      - dismissStaleReviews: true
+        restrictDismissals: true
+        requiredApprovingReviewCount: 2
+    requiredStatusChecks:
+      - contexts:
+          - some_status
+        strict: false

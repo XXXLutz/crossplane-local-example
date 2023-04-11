@@ -1,0 +1,74 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: customrepo
+  labels:
+    crossplane.io/xrd: xcustomrepos.github.kasnockndave.dev
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: github.kasnockndave.dev/v1alpha1
+    kind: xCustomRepo
+  resources:
+    - name: repository
+      base:
+        apiVersion: repo.github.upbound.io/v1alpha1
+        kind: Repository
+        metadata:
+          labels:
+            repo: default
+          name: default
+        spec:
+          forProvider:
+            gitignoreTemplate: Go
+            visibility: public
+          providerConfigRef:
+            name: default
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.repoName
+          toFieldPath: metadata.labels.repo
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.repoName
+          toFieldPath: metadata.name
+    - name: branch
+      base:
+        apiVersion: repo.github.upbound.io/v1alpha1
+        kind: Branch
+        metadata:
+          name: develop
+        spec:
+          forProvider:
+            repository: default
+          providerConfigRef:
+            name: default
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.repoName
+          toFieldPath: spec.forProvider.repository
+    - name: branch-protection
+      base:
+        apiVersion: repo.github.upbound.io/v1alpha1
+        kind: BranchProtection
+        metadata:
+          name: main-protection
+        spec:
+          forProvider:
+            allowsDeletions: true
+            enforceAdmins: true
+            pattern: main
+            repositoryIdSelector:
+              matchLabels:
+                repo: default
+            requiredPullRequestReviews:
+              - dismissStaleReviews: true
+                restrictDismissals: true
+                requiredApprovingReviewCount: 2
+            requiredStatusChecks:
+              - contexts:
+                  - some_status
+                strict: false
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.parameters.repoName
+          toFieldPath: spec.forProvider.repositoryIdSelector.matchLabels.repo
