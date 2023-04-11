@@ -89,7 +89,7 @@ In the status, you can deduce that it is healthy and ready to use.
 
 Also assess that the XRD has been created and is available.
 
-`kubectl describe composition customrepo`
+`kubectl describe composition customrepo`  
 `kubectl describe compositeresourcedefinition xcustomrepos.github.kasnockndave.dev`
 
 Check the applied claim.
@@ -101,8 +101,8 @@ Now **role-based access rules** can be introduced to give persons and groups tha
 
 Lastly, check the cluster-wide managed resources that have been created when the composition was instantiated.
 
-`kubectl get repository`
-`kubectl get branch`
+`kubectl get repository`  
+`kubectl get branch`  
 `kubectl get branchprotection`
 
 If all the resources are healthy and synced, open your Github account page.
@@ -123,7 +123,7 @@ Let's assume the repository resource is the reason.
 
 Get the resource name, then describe it.
 
-`kubectl get repository`
+`kubectl get repository`  
 `kubectl describe repository {insert-uniquely-generated-resource-name}`
 
 Finally the output will show you why applying it to Github is failing. 
