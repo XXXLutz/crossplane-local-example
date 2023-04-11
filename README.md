@@ -1,6 +1,5 @@
 # crossplane-local-example
 
-
 This repository provides a lightweight Kubernetes and Crossplane setup for the purpose of playing around with the tech.
 
 Installed are:
@@ -10,6 +9,14 @@ Installed are:
 3. The Crossplane Github provider
 4. An XRD resource to create example resources with a provided Github account
 
+## Content of the example
+
+The composite example consist of the resources **repository**, **branch** and **branch-protection rule**.
+While they are not used directly, they can be found in the `managed-resources` folder.
+
+The XRD `CustomRepo` combines them into one object, that exposes just the repository name and passes it down to the described managed resources.
+The definition and composition can be found in their respective yaml files.
+
 ## Setup
 
 ### Prerequisites
@@ -18,6 +25,11 @@ Install `kind`, options for different OSs are [described here](https://kind.sigs
 For Linux, best use brew.
 
 `brew install kind`
+
+Install `kubectl` to connect to the newly created local cluster. Different options are [described here](https://kubernetes.io/docs/tasks/tools/#kubectl).
+For Linux, best use brew.
+
+`brew install kubernetes-cli`
 
 Install `helm` in the same fashion. Options for different OSs are [described here](https://helm.sh/docs/intro/install/).
 For Linux, best use brew.
@@ -63,12 +75,57 @@ Apply the XRDs.
 
 Finally, apply the claim.
 
-`kubectl apply -f customRepo.yaml`
+`kubectl apply -f claims/customRepo.yaml`
 
-## Content of the example
+### Check the resources
 
-The composite example consist of the resources **repository**, **branch** and **branch-protection rule**.
-While they are not used directly, they can be found in the `managed-resources` folder.
+After installing everything properly, take a look at what you created.
 
-The XRD `CustomRepo` combines them into one object, that exposes just the repository name and passes it down to the described managed resources.
-The definition and composition can be found in their respective yaml files.
+Take a look at the installed provider.
+
+`kubectl describe providers provider-github`
+
+In the status, can deduce that it is healthy and ready to use.
+
+Also assess that the XRD has been created and is available.
+
+`kubectl describe composition customrepo`
+`kubectl describe compositeresourcedefinition xcustomrepos.github.kasnockndave.dev`
+
+Check the applied claim and it's cluster-wide resources.
+
+`kubectl describe -n default customRepo crossplane-demo-repository`
+
+Notice how this claim is explicitly namespaced. 
+Now role-based access rules can be introduced to give persons and groups that are not platform administrators proper permissions to this namespace.
+
+Lastly, check the cluster-wide managed resources that have been created when the composition was instantiated.
+
+`kubectl get repository`
+`kubectl get branch`
+`kubectl get branchprotection`
+
+If all the resources are healthy and synced, open your Github account page.
+Under **Repositories** a new one should pop up.
+Under **branches** and **settings** the resources represented in Kubernetes should appear.
+
+## Troubleshooting
+
+Executing the bash scripts might fail if the tools necessary have not been set up properly.
+Please take a look at the **Prerequisites** section to set them up.
+
+In case nothing is happening in your Github account, check if the claim is healthy.
+
+`kubectl describe -n default customRepo crossplane-demo-repository`
+
+If the status / event messages shows you an error, take a closer look at the managed resource that is the origin of the error.
+Let's assume the repository resource is the reason.
+
+Get the resource name, then describe it.
+
+`kubectl get repository`
+`kubectl describe repository {insert-uniquely-generated-resource-name}`
+
+Finally the output will show you why applying it to Github is failing. 
+Most like it's going to have to do with the **access token permissions**.
+Please take a look at the **Prerequisites** page and try out different permissions, especially if you decide to extend the example.
