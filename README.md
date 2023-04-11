@@ -81,23 +81,23 @@ Finally, apply the claim.
 
 After installing everything properly, take a look at what you created.
 
-Take a look at the installed provider.
+First the installed provider.
 
 `kubectl describe providers provider-github`
 
-In the status, can deduce that it is healthy and ready to use.
+In the status, you can deduce that it is healthy and ready to use.
 
 Also assess that the XRD has been created and is available.
 
 `kubectl describe composition customrepo`
 `kubectl describe compositeresourcedefinition xcustomrepos.github.kasnockndave.dev`
 
-Check the applied claim and it's cluster-wide resources.
+Check the applied claim.
 
 `kubectl describe -n default customRepo crossplane-demo-repository`
 
-Notice how this claim is explicitly namespaced. 
-Now role-based access rules can be introduced to give persons and groups that are not platform administrators proper permissions to this namespace.
+Notice how this claim is explicitly **namespaced**. 
+Now **role-based access rules** can be introduced to give persons and groups that are not platform administrators proper permissions to this namespace.
 
 Lastly, check the cluster-wide managed resources that have been created when the composition was instantiated.
 
@@ -107,7 +107,7 @@ Lastly, check the cluster-wide managed resources that have been created when the
 
 If all the resources are healthy and synced, open your Github account page.
 Under **Repositories** a new one should pop up.
-Under **branches** and **settings** the resources represented in Kubernetes should appear.
+After opening the repo, under **branches** and **settings** the resources represented in Kubernetes should appear.
 
 ## Troubleshooting
 
@@ -127,5 +127,5 @@ Get the resource name, then describe it.
 `kubectl describe repository {insert-uniquely-generated-resource-name}`
 
 Finally the output will show you why applying it to Github is failing. 
-Most like it's going to have to do with the **access token permissions**.
+Most likely it's going to have to do with the **access token permissions**.
 Please take a look at the **Prerequisites** page and try out different permissions, especially if you decide to extend the example.
