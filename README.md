@@ -75,7 +75,7 @@ Finally, execute connectArgoCD.sh to prompt the local admin password and port fo
 
 ### Check and sync the resources in ArgoCD
 
-Call `localhost:8080` and use the following credentials for the initial login:  
+Call [http://localhost:8080](http://localhost:8080) and use the following credentials for the initial login:  
 
 ```
 user: admin  
