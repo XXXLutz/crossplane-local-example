@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/XXXLutz/crossplane-local-example.git
-    targetRevision: extend-argocd
+    targetRevision: main
     path: xrds
   destination:
     name: in-cluster

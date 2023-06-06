@@ -5,3 +5,4 @@ metadata:
 data:
   repositories: |
     - url: https://github.com/XXXLutz/crossplane-local-example.git
+  application.resourceTrackingMethod: annotation
