@@ -82,7 +82,7 @@ user: admin
 password: the password prompted by the connectArgoCD.sh script  
 ```
 
-The XRD resources should be automatically synced, as soon as the app is created. After checking if the `xrd` app is healthy, enter the `github-example` and sync it, to create the desired claim.
+The XRD resources should be automatically synced, as soon as the app is created. After checking if the `xrds` app is healthy, enter the `github-example` and sync it, to create the desired claim.
 
 ### Check the resources in the terminal
 
