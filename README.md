@@ -71,7 +71,7 @@ Execute setupArgoCD.sh to install ArgoCD and set up the apps.
 
 Finally, execute connectArgoCD.sh to prompt the local admin password and port forward ArgoCD to localhost:8080.
 
-`./connectArgoCD`
+`./connectArgoCD.sh`
 
 ### Check and sync the resources in ArgoCD
 
