@@ -4,10 +4,8 @@ kind create cluster --name crossplane-test
 kubectl cluster-info --context crossplane-test
 
 kubectl create namespace crossplane-system
-helm repo add crossplane-stable https://charts.crossplane.io/stable
-helm repo update
 
-helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
+helm install crossplane https://charts.crossplane.io/stable/crossplane-1.12.1.tgz --namespace crossplane-system --wait
 
 helm list -n crossplane-system
 
