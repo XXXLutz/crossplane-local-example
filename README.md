@@ -65,21 +65,28 @@ Execute setupProvider.sh to install the Github-provider and its access credentia
 
 `./setupProvider.sh`
 
-Switch back to the main folder.
+Execute setupArgoCD.sh to install ArgoCD and set up the apps.
 
-`cd ..`
+`./setupArgoCD.sh`
 
-Apply the XRDs.
+Finally, execute connectArgoCD.sh to prompt the local admin password and port forward ArgoCD to localhost:8080.
 
-`kubectl apply -f xrds/contribution/`
+`./connectArgoCD.sh`
 
-Finally, apply the claim.
+### Check and sync the resources in ArgoCD
 
-`kubectl apply -f claims/customRepo.yaml`
+Call [http://localhost:8080](http://localhost:8080) and use the following credentials for the initial login:  
 
-### Check the resources
+```
+user: admin  
+password: the password prompted by the connectArgoCD.sh script  
+```
 
-After installing everything properly, take a look at what you created.
+The XRD resources should be automatically synced, as soon as the app is created. After checking if the `xrds` app is healthy, enter the `github-example` and sync it, to create the desired claim.
+
+### Check the resources in the terminal
+
+After installing and syncing everything properly, take a look at what you created in the terminal.
 
 First the installed provider.
 
@@ -108,6 +115,12 @@ Lastly, check the cluster-wide managed resources that have been created when the
 If all the resources are healthy and synced, open your Github account page.
 Under **Repositories** a new one should pop up.
 After opening the repo, under **branches** and **settings** the resources represented in Kubernetes should appear.
+
+## Tear down
+
+Execute teardownCluster.sh to tear down the cluster and effectively remove everything installed with the example.
+
+`./teardownCluster.sh`
 
 ## Troubleshooting
 
