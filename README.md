@@ -116,6 +116,12 @@ If all the resources are healthy and synced, open your Github account page.
 Under **Repositories** a new one should pop up.
 After opening the repo, under **branches** and **settings** the resources represented in Kubernetes should appear.
 
+## Tear down
+
+Execute teardownCluster.sh to tear down the cluster and effectively remove everything installed with the example.
+
+`./teardownCluster.sh`
+
 ## Troubleshooting
 
 Executing the bash scripts might fail if the tools necessary have not been set up properly.
